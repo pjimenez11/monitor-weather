@@ -19,7 +19,7 @@ interface MapProps {
 const Map: React.FC<MapProps> = ({ onClick, width = '100%', height="calc(100vh - 200px)" }) => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyCqH16E8kZ-ZSh3r9emF13Gk5OOTEXnePI",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
   });
 
   const onLoad = React.useCallback((map: google.maps.Map) => {
@@ -34,7 +34,6 @@ const Map: React.FC<MapProps> = ({ onClick, width = '100%', height="calc(100vh -
       zoom={14}
       onLoad={onLoad}
       onClick={(change) => {
-        console.log(change.latLng?.lat(), change.latLng?.lng());
         onClick?.(change.latLng?.lng() || 0, change.latLng?.lat() || 0);
       }}
     >
