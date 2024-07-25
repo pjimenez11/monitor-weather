@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import { MenuIcon, PanelsTopLeft } from "lucide-react";
+import { Leaf, MenuIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -34,9 +34,9 @@ export function SheetMenu() {
             variant="link"
             asChild
           >
-            <Link href="/quotes" className="flex items-center gap-2">
-              <PanelsTopLeft className="mr-1 h-6 w-6" />
-              <h1 className="text-lg font-bold">GabMotors</h1>
+            <Link href="/dashboard" className="flex items-center gap-2">
+              <Leaf className="mr-1 h-6 w-6" />
+              <h1 className="text-lg font-bold">ECOPOWER</h1>
             </Link>
           </Button>
         </SheetHeader>

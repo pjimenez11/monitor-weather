@@ -87,25 +87,6 @@ export function Menu({ isOpen }: MenuProps) {
               )}
             </li>
           ))}
-          <li className="flex w-full grow items-end">
-            <TooltipProvider disableHoverableContent>
-              <Tooltip delayDuration={100}>
-                <TooltipTrigger asChild>
-                  <Link href={'/login'} className="mt-5 h-10 w-full justify-center">
-                    <Button variant="outline">
-                      <span className={cn(isOpen === false ? '' : 'mr-4')}>
-                        <LogOut size={18} />
-                      </span>
-                      <p className={cn('whitespace-nowrap', isOpen === false ? 'hidden opacity-0' : 'opacity-100')}>
-                        Cerrar sesión
-                      </p>
-                    </Button>
-                  </Link>
-                </TooltipTrigger>
-                {isOpen === false && <TooltipContent side="right">Cerrar sesión</TooltipContent>}
-              </Tooltip>
-            </TooltipProvider>
-          </li>
         </ul>
       </nav>
     </ScrollArea>

@@ -13,31 +13,13 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
 export class AxiosClient implements HttpHandler {
   private static instance: AxiosClient
   private axiosInstance: AxiosInstance
-  private static readonly baseUrl: string = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
-  private static accessToken: string | null = null
 
   private constructor() {
     this.axiosInstance = axios.create({
-      baseURL: AxiosClient.baseUrl,
       headers: {
         'Content-Type': 'application/json',
       },
     })
-
-    this.axiosInstance.interceptors.request.use(
-      async (config) => {
-        const token = await getCookie(ACCESS_TOKEN_COOKIE_NAME)
-        if (token) {
-          config.headers.Authorization = `Bearer ${token.replaceAll('"', '')}`
-        } else {
-          document.dispatchEvent(new CustomEvent('unauthorized'))
-        }
-        return config
-      },
-      (error) => {
-        Promise.reject(error)
-      },
-    )
 
     this.axiosInstance.interceptors.response.use(
       (response) => {
@@ -68,13 +50,6 @@ export class AxiosClient implements HttpHandler {
       this.instance = new AxiosClient()
     }
     return this.instance
-  }
-
-  setAccessToken(accessToken: string | null): void {
-    AxiosClient.accessToken = accessToken
-    if (AxiosClient.accessToken) {
-      this.axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${AxiosClient.accessToken}`
-    }
   }
 
   async get<T>(url: string, config?: CustomAxiosRequestConfig): Promise<T> {

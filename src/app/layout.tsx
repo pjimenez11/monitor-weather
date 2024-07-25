@@ -4,6 +4,8 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/core/providers/theme-provider";
 import { Toaster } from "react-hot-toast";
+import { QueryClientProvider } from "@tanstack/react-query";
+import queryClient from "@/core/infrastructure/query/QueryClient";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -21,16 +23,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
+        className={`min-h-screen bg-background font-sans antialiased,
+          ${fontSans.variable}`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Toaster position="bottom-center" />
-          {children}
+          <QueryClientProvider client={queryClient}>
+            <Toaster position="bottom-center" />
+            {children}
+          </QueryClientProvider>
         </ThemeProvider>
       </body>
     </html>
